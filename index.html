@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Age Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            
+        }
+        h1 {
+            color: #4CAF50;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="date"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="date"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        #result strong {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Age Calculator</h1>
+        <label for="birthDate">Enter your birth date:</label>
+        <input type="date" id="birthDate" oninput="updateAge()">
+
+        <div id="result">
+            <p id="age">Enter your birth date to see your age.</p>
+        </div>
+    </div>
+
+    <script>
+        function updateAge() {
+            const birthDate = document.getElementById("birthDate").value;
+            if (!birthDate) {
+                document.getElementById("age").innerHTML = "Please select a birth date.";
+                document.getElementById("result").style.display = 'none';
+                return;
+            }
+
+            const birthDateObj = new Date(birthDate);
+            const currentDate = new Date();
+
+
+            let years = currentDate.getFullYear() - birthDateObj.getFullYear();
+            let months = currentDate.getMonth() - birthDateObj.getMonth();
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const days = Math.floor((currentDate - birthDateObj) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((currentDate - birthDateObj) / (1000 * 60 * 60));
+            const minutes = Math.floor((currentDate - birthDateObj) / (1000 * 60));
+            const seconds = Math.floor((currentDate - birthDateObj) / 1000);
+
+            // Display the result in real-time
+            const result = `
+                <strong>Age:</strong><br>
+                Years: ${years}<br>
+                Months: ${months}<br>
+                Days: ${days}<br>
+                Hours: ${hours}<br>
+                Minutes: ${minutes}<br>
+                Seconds: ${seconds}
+            `;
+            
+            document.getElementById("age").innerHTML = result;
+            document.getElementById("result").style.display = 'block';
+        }
+    </script>
+</body>
+</html>
